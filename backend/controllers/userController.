@@ -1,0 +1,171 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');  
+const mongoose = require('mongoose');
+const User = require('../models/User');
+
+// ✅ Inscription d'un utilisateur
+const registerUser = async (req, res) => {
+    try {
+        const { username, email, password, role } = req.body;
+        console.log("📩 Tentative d'inscription :", { username, email });
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: "❌ Un utilisateur avec cet email existe déjà !" });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ username, email, password: hashedPassword, role: role || 'user' });
+
+        await newUser.save();
+        console.log("✅ Utilisateur inscrit avec succès :", newUser);
+        res.status(201).json({ message: "✅ Utilisateur inscrit avec succès !" });
+
+    } catch (error) {
+        console.error("🚨 Erreur lors de l'inscription :", error);
+        res.status(500).json({ error: "🚨 Erreur interne du serveur" });
+    }
+};
+
+// 🔑 Connexion d'un utilisateur
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        console.log("🔑 Tentative de connexion :", email);
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            console.log("❌ Utilisateur introuvable");
+            return res.status(400).json({ error: "❌ Email ou mot de passe incorrect" });
+        }
+
+        const validPassword = await bcrypt.compare(password, user.password);
+        if (!validPassword) {
+            console.log("❌ Mot de passe incorrect");
+            return res.status(400).json({ error: "❌ Email ou mot de passe incorrect" });
+        }
+
+        const token = jwt.sign(
+            { _id: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        console.log("✅ Connexion réussie, Token généré !");
+        res.status(200).json({ message: "✅ Connexion réussie !", token });
+
+    } catch (error) {
+        console.error("🚨 Erreur interne du serveur :", error);
+        res.status(500).json({ error: "🚨 Erreur interne du serveur" });
+    }
+};
+
+// 📋 Récupérer tous les utilisateurs
+const getAllUsers = async (req, res) => {
+    try {
+        console.log("✅ Route GET /api/users appelée !");
+        const users = await User.find({}, '-password'); // Exclut les mots de passe pour la sécurité
+        res.status(200).json(users);
+    } catch (error) {
+        console.error('❌ Erreur lors de la récupération des utilisateurs:', error);
+        res.status(500).json({ error: '❌ Erreur interne du serveur' });
+    }
+};
+
+// 🔍 Récupérer un utilisateur par son ID avec logs détaillés
+const getUserById = async (req, res) => {
+    try {
+        console.log(`🔍 Recherche de l'utilisateur avec l'ID: ${req.params.id}`);
+        
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            console.log(`❌ ID non valide: ${req.params.id}`);
+            return res.status(400).json({ error: "❌ ID utilisateur invalide" });
+        }
+        
+        console.log('✅ ID valide, recherche dans la base de données...');
+        const user = await User.findById(req.params.id, '-password'); // Exclure le mot de passe
+        
+        if (!user) {
+            console.log('❌ Utilisateur non trouvé');
+            return res.status(404).json({ error: "❌ Utilisateur non trouvé" });
+        }
+        
+        console.log('✅ Utilisateur trouvé');
+        res.status(200).json(user);
+    } catch (error) {
+        console.error("🚨 Erreur détaillée:", error.message, error.stack);
+        res.status(500).json({ error: "🚨 Erreur interne du serveur" });
+    }
+};
+
+// 🔄 Mettre à jour un utilisateur
+const updateUser = async (req, res) => {
+    try {
+        const { username, email, password, role } = req.body;
+        const userId = req.params.id;
+
+        console.log("🔍 Requête reçue pour mise à jour de l'utilisateur :", userId);
+        console.log("�� Données reçues :", req.body);
+
+        if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+            console.log("❌ ID utilisateur invalide :", userId);
+            return res.status(400).json({ error: "❌ ID utilisateur invalide" });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            console.log("❌ Utilisateur introuvable :", userId);
+            return res.status(404).json({ error: "❌ Utilisateur non trouvé" });
+        }
+
+        if (username) user.username = username;
+        if (email) user.email = email;
+        if (role) user.role = role;
+        if (password) {
+            user.password = await bcrypt.hash(password, 10);
+        }
+
+        await user.save();
+        console.log("✅ Mise à jour réussie !", user);
+        res.status(200).json({ message: "✅ Mise à jour réussie !", user });
+
+    } catch (error) {
+        console.error("🚨 Erreur lors de la mise à jour :", error);
+        res.status(500).json({ error: "🚨 Erreur interne du serveur" });
+    }
+};
+
+// 🗑️ Supprimer un utilisateur
+const deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        console.log("🗑️ Tentative de suppression de l'utilisateur :", userId);
+
+        if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+            console.log("❌ ID utilisateur invalide :", userId);
+            return res.status(400).json({ error: "❌ ID utilisateur invalide" });
+        }
+
+        const user = await User.findByIdAndDelete(userId);
+        if (!user) {
+            return res.status(404).json({ error: "❌ Utilisateur non trouvé" });
+        }
+
+        console.log("✅ Suppression réussie !");
+        res.status(200).json({ message: "✅ Utilisateur supprimé avec succès !" });
+
+    } catch (error) {
+        console.error("🚨 Erreur lors de la suppression :", error);
+        res.status(500).json({ error: "🚨 Erreur interne du serveur" });
+    }
+};
+
+// ✅ Export des fonctions
+module.exports = {
+    registerUser,
+    loginUser,
+    getAllUsers,
+    getUserById,  // ✅ Ajout de la fonction ici
+    updateUser,
+    deleteUser
+};

@@ -1,33 +1,20 @@
-"use client"; // ✅ Ajouté pour éviter l'erreur 'client-only'
+"use client"; // Désactive le SSR pour ce composant
 
-import Image from 'next/image';
+import { useEffect, useState } from "react";
 
-export default function HomePage() {
-  // Définition des produits avec un typage strict
-  const products: { name: string; price: number; image: string }[] = [
-    { name: 'Chaussures de sport', price: 49.99, image: '/images/shoes.jpg' },
-    { name: 'T-shirt', price: 19.99, image: '/images/tshirt.jpg' },
-  ];
+export default function Home() {
+  const [timestamp, setTimestamp] = useState(0);
+  const [randomNumber, setRandomNumber] = useState(0);
+
+  useEffect(() => {
+    setTimestamp(Date.now());
+    setRandomNumber(Math.random());
+  }, []);
 
   return (
-    <main className="container">
-      <h1 className="title">Bienvenue sur Smithair Concept</h1>
-
-      <div className="products-grid">
-        {products.map((product, index) => (
-          <div key={index} className="product-card">
-            <Image
-              src={product.image}
-              alt={product.name}
-              width={300}
-              height={200}
-              className="product-image"
-            />
-            <h2>{product.name}</h2>
-            <p className="price">💰 {product.price.toFixed(2)} €</p>
-          </div>
-        ))}
-      </div>
-    </main>
+    <div>
+      <h1>{timestamp}</h1>
+      <h2>{randomNumber}</h2>
+    </div>
   );
 }

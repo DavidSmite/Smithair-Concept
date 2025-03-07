@@ -1,2 +1,5 @@
 git add .gitignore
 git push origin main
+backend/.env
+backend/.env
+backend/.env
