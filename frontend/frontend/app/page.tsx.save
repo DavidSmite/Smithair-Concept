@@ -1,3 +1,0 @@
-git add frontend/app/page.tsx
-git commit -m "Correction affichage page principale"
-git push origin main

@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // 👑 Configuration Next.js propre
+  // Aucun i18n ici pour App Router
   reactStrictMode: true,
-  experimental: {
-    serverActions: {} // ✅ Correction ici (objet au lieu d'un booléen)
-  }
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
