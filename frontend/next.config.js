@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 👑 Configuration Next.js propre
-  // Aucun i18n ici pour App Router
+  output: 'export',
   reactStrictMode: true,
+  images: {
+    unoptimized: true, // recommandé avec 'output: export' pour éviter les erreurs d'images
+  },
 }
 
-module.exports = nextConfig
+export default nextConfig
