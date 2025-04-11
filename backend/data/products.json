@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Queen Curl",
+    "price": 149.99,
+    "stock": 12,
+    "isNew": true,
+    "image": "queen-curl.jpg",
+    "id": 1744032691901
+  },
+  {
+    "name": "Afro Glow",
+    "price": 119.99,
+    "stock": 8,
+    "isNew": false,
+    "image": "afro-glow.jpg",
+    "id": 1744032699701
+  },
+  {
+    "name": "Boho Locks",
+    "price": 129.99,
+    "stock": 5,
+    "isNew": true,
+    "image": "boho-locks.jpg",
+    "id": 1744032746142
+  },
+  {
+    "name": "Luxe Lace",
+    "price": 199.99,
+    "stock": 3,
+    "isNew": false,
+    "image": "luxe-lace.jpg",
+    "id": 1744032691293
+  },
+  {
+    "name": "Tropik Waves",
+    "price": 139.99,
+    "stock": 10,
+    "isNew": true,
+    "image": "tropik-waves.jpg",
+    "id": 1744032757235
+  },
+  {
+    "name": "Kinky Crown",
+    "price": 109.99,
+    "stock": 20,
+    "isNew": false,
+    "image": "kinky-crown.jpg",
+    "id": 1744032776706
+  },
+  {
+    "name": "Straight Empress",
+    "price": 159.99,
+    "stock": 7,
+    "isNew": true,
+    "image": "straight-empress.jpg",
+    "id": 1744032691070
+  },
+  {
+    "name": "Silk Touch",
+    "price": 179.99,
+    "stock": 6,
+    "isNew": false,
+    "image": "silk-touch.jpg",
+    "id": 1744032698481
+  },
+  {
+    "name": "Sunshine Fro",
+    "price": 99.99,
+    "stock": 15,
+    "isNew": true,
+    "image": "sunshine-fro.jpg",
+    "id": 1744032737680
+  },
+  {
+    "name": "Urban Bob",
+    "price": 89.99,
+    "stock": 9,
+    "isNew": false,
+    "image": "urban-bob.jpg",
+    "id": 1744032756292
+  }
+]

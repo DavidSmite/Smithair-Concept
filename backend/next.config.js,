@@ -1,0 +1,13 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {
+    appDir: true,
+  },
+  // PWA: permet à l’app d’être installée
+  images: {
+    domains: ['localhost'], // si tu ajoutes des images
+  },
+};
+
+module.exports = nextConfig;

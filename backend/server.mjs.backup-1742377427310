@@ -1,0 +1,18 @@
+const PORT = 5052;
+
+import express from 'express';
+
+const app = express();
+
+const PORT = process.env.PORT || process.argv[2] || 5050;
+
+// Affiche le port utilisé dans la console
+console.log('PORT in server.mjs:', PORT);
+
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

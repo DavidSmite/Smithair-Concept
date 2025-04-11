@@ -1,0 +1,4 @@
+# Ajoute tous les chemins ici...
+./node_modules/undici-types/diagnostics-channel.d.ts
+./node_modules/undici-types/patch.d.ts
+./node_modules/undici-types/util.d.ts

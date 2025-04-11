@@ -1,0 +1,43 @@
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import authRoutes from "./routes/authRoutes.mjs";
+import os from "os"; // ✅ Import du module OS pour vérifier les interfaces réseau
+
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 4000;
+
+console.log("🔗 Connexion à MongoDB avec l'URL :", process.env.MONGO_URI
+  ? `${process.env.MONGO_URI.split('//')[0]}//*****`
+  : "mongodb://localhost:27017/smithair");
+
+// Connexion à MongoDB
+mongoose
+  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/smithair")
+  .then(() => console.log("✅ Connexion à MongoDB réussie"))
+  .catch((err) => {
+    console.error("❌ Erreur de connexion à MongoDB :", err);
+    process.exit(1);
+  });
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.use("/api/auth", authRoutes);
+
+app.get("/", (req, res) => {
+  res.send("🚀 Backend de Smithair Concept opérationnel !");
+});
+
+// ✅ Vérification des interfaces réseau avant de démarrer le serveur
+console.log("🔍 Interfaces réseau disponibles :", os.networkInterfaces());
+
+// Démarrer le serveur
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Serveur backend démarré sur http://localhost:${PORT}`);
+});

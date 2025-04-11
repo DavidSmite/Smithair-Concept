@@ -1,0 +1,12 @@
+
+> backend@1.0.0 dev
+> nodemon server.mjs
+
+[33m[nodemon] 3.1.9[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node server.mjs`[39m
+🔗 Connexion à MongoDB avec l'URL : mongodb+srv://*****
+✅ Serveur backend démarré sur http://localhost:4000
+✅ Connexion à MongoDB réussie

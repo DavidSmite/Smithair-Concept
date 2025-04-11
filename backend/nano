@@ -1,0 +1,77 @@
+#!/usr/bin/env node
+
+// Enrichissement du script de correction
+const fs = require("fs/promises");
+const path = require("path");
+
+async function detectProblems(filePath) {
+  const content = await fs.readFile(filePath, "utf-8");
+
+  // Liste des problèmes courants à détecter
+  const problems = [];
+
+  if (!content.includes("listen")) {
+    problems.push("Aucun appel à 'listen' détecté.");
+  }
+
+  if (content.match(/port\s*=\s*[\d]{4}/) === null) {
+    problems.push("Aucun port spécifié trouvé.");
+  }
+
+  // Ajouter d'autres détections ici...
+  
+  return problems;
+}
+
+async function applyCorrections(filePath, corrections) {
+  let content = await fs.readFile(filePath, "utf-8");
+
+  // Appliquer chaque correction spécifiée
+  for (const [pattern, replacement] of corrections) {
+    content = content.replace(pattern, replacement);
+  }
+
+  await fs.writeFile(filePath, content, "utf-8");
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+
+  // Inclure un paramètre pour spécifier le chemin
+  const filePath = args[0];
+  if (!filePath) {
+    console.error("Veuillez fournir le chemin du fichier à corriger.");
+    process.exit(1);
+  }
+
+  const resolvedPath = path.resolve(filePath);
+
+  // Détection des problèmes
+  console.log("Détection des problèmes...");
+  const problems = await detectProblems(resolvedPath);
+  if (problems.length === 0) {
+    console.log("Aucun problème détecté. Aucun changement nécessaire.");
+    return;
+  }
+
+  console.log("Problèmes détectés :");
+  problems.forEach((p, idx) => console.log(`${idx + 1}. ${p}`));
+
+  // Liste des corrections automatiques
+  const corrections = [
+    // Exemple : remplacer un port non défini par un port par défaut
+    [/port\s*=\s*undefined/, "port = 3000"]
+  ];
+
+  // Appliquer les corrections
+  console.log("\nApplication des corrections...");
+  await applyCorrections(resolvedPath, corrections);
+
+  console.log("Corrections appliquées avec succès !");
+  console.log("Vous pouvez relancer votre serveur pour vérifier les modifications.");
+}
+
+main().catch(error => {
+  console.error(`Erreur lors de l'exécution : ${error.message}`);
+  process.exit(1);
+});

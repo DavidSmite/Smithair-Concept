@@ -1,0 +1,22 @@
+🔍 AVANT OPTIMISATION :
+count: 0
+size: 0 bytes
+in-pack: 29909
+packs: 1
+size-pack: 181.26 MiB
+prune-packable: 0
+garbage: 0
+size-garbage: 0 bytes
+183M	.git
+⚙️ Lancement de git gc --aggressive --prune=now...
+🌀 Compression en cours 
+✅ APRÈS OPTIMISATION :
+count: 0
+size: 0 bytes
+in-pack: 29909
+packs: 1
+size-pack: 181.26 MiB
+prune-packable: 0
+garbage: 0
+size-garbage: 0 bytes
+194M	.git

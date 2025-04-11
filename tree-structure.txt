@@ -1,0 +1,29 @@
+frontend/app
+├── 404.tsx
+├── __locale_backup
+│   ├── layout.tsx
+│   ├── login
+│   │   └── page.tsx
+│   ├── politique-de-confidentialite
+│   │   └── page.tsx
+│   └── products
+│       └── add
+├── admin
+│   ├── page.tsx
+│   └── products
+│       ├── add
+│       │   └── page.tsx
+│       └── page.tsx
+├── api
+│   └── logout
+│       └── route.ts
+├── fr
+│   ├── layout.tsx
+│   └── politique-de-confidentialite
+│       └── page.tsx
+├── layout.tsx
+├── login
+│   └── page.tsx
+└── page.tsx
+
+14 directories, 13 files

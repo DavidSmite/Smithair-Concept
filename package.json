@@ -1,0 +1,20 @@
+{
+  "name": "smithair-concept",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/DavidSmite/Smithair-Concept.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavidSmite/Smithair-Concept/issues"
+  },
+  "homepage": "https://github.com/DavidSmite/Smithair-Concept#readme"
+}

@@ -1,0 +1,52 @@
+/* ========= BASE GLOBALS ========= */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========= COULEURS DE BASE ========= */
+
+html {
+  @apply bg-white text-black transition-colors duration-500;
+}
+
+html.dark {
+  @apply bg-[#0f172a] text-white;
+}
+
+/* ========= TYPOGRAPHE PAR DÉFAUT ========= */
+
+body {
+  @apply font-sans antialiased;
+}
+
+/* ========= ANTI-BUG IOS PWA ========= */
+
+html,
+body {
+  min-height: 100%;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
+}
+
+body {
+  padding-bottom: env(safe-area-inset-bottom);
+  background-color: inherit;
+}
+
+/* ========= ANIMATION CUSTOM OPTIONNELLE ========= */
+
+.fade-in {
+  @apply opacity-0 animate-fade-in;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

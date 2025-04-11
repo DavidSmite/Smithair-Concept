@@ -1,0 +1,12 @@
+{
+  "ignore": [
+    "node_modules/",
+    "package-lock.json",
+    "backend-log.txt",
+    ".git/",
+    "*.test.js",
+    "*.save",
+    "controllers/",
+    "diagnostic.mjs"
+  ]
+}
